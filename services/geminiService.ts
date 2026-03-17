@@ -1,6 +1,7 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
 import { Odun, ShellState, DiloggunOdu, IboReading } from "../types";
+import { SourceRecord, TopicEntry, ClaimNote, TranscriptUploadForm, ProcessingResult } from "../transcriptTypes";
 
 /**
  * Updated initialization to use process.env.API_KEY directly within each function.
@@ -251,4 +252,168 @@ export const getDiloggunCompositeWisdom = async (odu: DiloggunOdu, ireOrOsogbo: 
     console.error("Error fetching Diloggun composite wisdom:", error);
     return "The path is currently obscured. Try again.";
   }
+};
+
+// ========== TRANSCRIPT PROCESSING FUNCTIONS ==========
+
+const generateId = () => `${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+
+/**
+ * Process a raw YouTube transcript into structured knowledge entries.
+ * Uses OpenRouter API with a free model.
+ */
+export const processRawTranscript = async (form: TranscriptUploadForm): Promise<ProcessingResult> => {
+  const apiKey = process.env.OPENROUTER_API_KEY as string;
+  if (!apiKey) {
+    throw new Error("OPENROUTER_API_KEY is not set. Add it to your .env.local file.");
+  }
+
+  const sourceId = generateId();
+
+  const prompt = `You are a scholarly knowledge-systems architect specializing in oral tradition, religious studies, and African diaspora spiritual practice. Your job is to take a raw YouTube transcript and transform it into a structured digital study guide.
+
+CRITICAL RULES FOR WORDING:
+- NEVER use "the speaker says", "the speaker argues", "he states", "she mentions" etc.
+- Instead, use source-framed teaching style:
+  • "${form.teacher} frames X as Y"
+  • "Within ${form.teacher}'s teaching framework, X is treated as Y"
+  • "From ${form.teacher}'s perspective, X represents Y"
+  • "In this framework, X is presented as Y"
+  • For practice instructions: "X is presented as Y for practitioners who Z"
+- Write each entry like a curated study note, not a transcript recap
+- Be calm, precise, rooted, interpretive, non-hysterical, respectful but not submissive
+
+TEACHER: ${form.teacher}
+SOURCE TITLE: ${form.title}
+DATE: ${form.date}
+TRADITION LENS: ${form.traditionLens || "Yoruba / Lucumí / Regla de Ocha"}
+SOURCE TYPE: ${form.sourceType || "Live talk / oral teaching / commentary"}
+
+RAW TRANSCRIPT:
+${form.rawTranscript}
+
+TASK: Analyze this transcript and produce structured output with these components:
+
+1. EDITORIAL NOTE: Write a 2-3 sentence editorial disclaimer noting this preserves the teacher's oral teaching framework in cleaned study-note form, includes various types of content (instruction, interpretation, critique, etc.), and should be read alongside other lineages and references.
+
+2. TONE TAGS: Identify 3-8 tone/content tags from: instruction, critique, warning, history, spiritual practice, ritual ethics, polemic, personal testimony, mythic narrative, lineage perspective, practical advice, devotional, philosophical, controversial
+
+3. TOPICS: Break the transcript into 3-15 distinct topic entries. For each:
+   - title: Clear, concise topic name
+   - knowledgeType: One or more of: oral teaching, lineage perspective, personal critique, ritual instruction, historical claim, mythic interpretation, practical advice, controversial assertion, devotional instruction, training philosophy, ritual philosophy
+   - summary: 2-4 sentences in source-framed style
+   - detailedNotes: Expanded notes (3-8 sentences)
+   - practiceImplications: What practitioners should know (if applicable, otherwise empty string)
+   - warnings: Any cautions or warnings (if applicable, otherwise empty string)
+   - historicalClaims: Historical assertions made (if applicable, otherwise empty string)
+   - mythicReferences: Mythic or narrative references (if applicable, otherwise empty string)
+   - lineageSensitivity: Notes on lineage-specific content (if applicable, otherwise empty string)
+   - verificationStatus: One of: verified, interpretive, tradition-specific, needs verification, contested, personal opinion
+   - tags: 3-6 relevant tags
+   - claims: Array of atomic claim-level notes, each with:
+     - type: One of: claim, interpretation, practice_instruction, warning, historical_assertion, anecdote, mythic_explanation, contested_statement, needs_verification
+     - content: The specific claim in 1-2 sentences, source-framed
+
+You MUST return ONLY valid JSON, no markdown, no explanation, no code fences. The JSON must match this exact structure:
+{"editorialNote":"string","toneTags":["string"],"topics":[{"title":"string","knowledgeType":"string","summary":"string","detailedNotes":"string","practiceImplications":"string","warnings":"string","historicalClaims":"string","mythicReferences":"string","lineageSensitivity":"string","verificationStatus":"string","tags":["string"],"claims":[{"type":"string","content":"string"}]}]}`;
+
+  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+      'HTTP-Referer': window.location.origin,
+    },
+    body: JSON.stringify({
+      model: 'inception/mercury-2',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are a JSON-only API. You MUST respond with valid JSON only. No markdown, no explanation, no code fences, no text before or after the JSON.'
+        },
+        {
+          role: 'user',
+          content: prompt
+        }
+      ],
+      temperature: 0.3,
+      max_tokens: 8000,
+    }),
+  });
+
+  if (!response.ok) {
+    const errBody = await response.text();
+    throw new Error(`OpenRouter API error (${response.status}): ${errBody}`);
+  }
+
+  const data = await response.json();
+  const text = data.choices?.[0]?.message?.content;
+
+  if (!text) {
+    throw new Error("AI returned empty response");
+  }
+
+  let parsed: any;
+  try {
+    parsed = JSON.parse(text);
+  } catch {
+    // Try to extract JSON from markdown code blocks
+    const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
+    if (jsonMatch) {
+      parsed = JSON.parse(jsonMatch[1]);
+    } else {
+      // Try to find JSON object in the response
+      const objectMatch = text.match(/\{[\s\S]*\}/);
+      if (objectMatch) {
+        parsed = JSON.parse(objectMatch[0]);
+      } else {
+        throw new Error("Failed to parse AI response as JSON");
+      }
+    }
+  }
+
+  // Build the SourceRecord
+  const source: SourceRecord = {
+    id: sourceId,
+    title: form.title,
+    sourceType: form.sourceType || "Live talk / oral teaching / commentary",
+    teacher: form.teacher,
+    date: form.date,
+    traditionLens: form.traditionLens || "Yoruba / Lucumí / Regla de Ocha",
+    toneTags: parsed.toneTags || [],
+    reliabilityType: "primary oral source",
+    editorialNote: parsed.editorialNote || "",
+    rawTranscript: form.rawTranscript,
+    createdAt: new Date().toISOString(),
+    topicIds: [],
+  };
+
+  // Build TopicEntry[] from AI output
+  const topics: TopicEntry[] = (parsed.topics || []).map((t: any) => {
+    const topicId = generateId();
+    source.topicIds.push(topicId);
+    return {
+      id: topicId,
+      sourceId,
+      title: t.title || "Untitled Topic",
+      teacher: form.teacher,
+      knowledgeType: t.knowledgeType || "oral teaching",
+      summary: t.summary || "",
+      detailedNotes: t.detailedNotes || "",
+      practiceImplications: t.practiceImplications || undefined,
+      warnings: t.warnings || undefined,
+      historicalClaims: t.historicalClaims || undefined,
+      mythicReferences: t.mythicReferences || undefined,
+      lineageSensitivity: t.lineageSensitivity || undefined,
+      verificationStatus: t.verificationStatus || "needs verification",
+      tags: t.tags || [],
+      claims: (t.claims || []).map((c: any) => ({
+        id: generateId(),
+        type: c.type || "claim",
+        content: c.content || "",
+      })),
+    } as TopicEntry;
+  });
+
+  return { source, topics };
 };

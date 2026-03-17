@@ -12,6 +12,7 @@ import OshaHistory from './components/OshaHistory.tsx';
 import OrishaEncyclopedia from './components/OrishaEncyclopedia.tsx';
 import DiloggunStudyGuide from './components/DiloggunStudyGuide.tsx';
 import OrishaCalendar from './components/OrishaCalendar.tsx';
+import TranscriptProcessor from './components/TranscriptProcessor.tsx';
 import { getOdunWisdom, getCompositeWisdom, getScenarioComparativeAnalysis } from './services/geminiService';
 
 // --- Internal Components & Styles ---
@@ -611,11 +612,12 @@ const App: React.FC = () => {
     <div className="relative min-h-screen text-slate-200 selection:bg-amber-500/30 font-sans">
       <StarBackground />
       <main className="relative z-10 flex flex-col min-h-screen">
-        {view === 'landing' && <SystemSelector onSelectObi={goToObiDashboard} onSelectMerindilogun={() => setView('mDashboard')} onSelectHistory={() => setView('history')} onSelectOrishas={() => setView('orishas')} onSelectCalendar={() => setView('calendar')} />}
+        {view === 'landing' && <SystemSelector onSelectObi={goToObiDashboard} onSelectMerindilogun={() => setView('mDashboard')} onSelectHistory={() => setView('history')} onSelectOrishas={() => setView('orishas')} onSelectCalendar={() => setView('calendar')} onSelectTranscripts={() => setView('transcripts')} />}
         {view === 'history' && <OshaHistory setView={setView} goHome={goHome} />}
         {view === 'orishas' && <OrishaEncyclopedia setView={setView} goHome={goHome} />}
         {view === 'calendar' && <OrishaCalendar setView={setView} goHome={goHome} />}
         {view === 'mStudyGuide' && <DiloggunStudyGuide setView={setView} goHome={goHome} />}
+        {view === 'transcripts' && <TranscriptProcessor setView={setView} goHome={goHome} />}
 
 
         {view === 'dashboard' && renderDashboard()}

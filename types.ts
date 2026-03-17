@@ -77,7 +77,7 @@ export type ViewState =
   | 'landing'
   | 'dashboard' | 'study' | 'quiz' | 'oracle' | 'scenarios'
   | 'mDashboard' | 'mStudy' | 'mQuiz' | 'mOracle' | 'mStudyGuide'
-  | 'history' | 'orishas' | 'calendar';
+  | 'history' | 'orishas' | 'calendar' | 'transcripts';
 
 export interface QuizState {
   currentOdunId: string | null;

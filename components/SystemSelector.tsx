@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dices, BookOpen, Scroll, Calendar } from 'lucide-react';
+import { Dices, BookOpen, Scroll, Calendar, FileText } from 'lucide-react';
 
 interface SystemSelectorProps {
     onSelectObi: () => void;
@@ -7,6 +7,7 @@ interface SystemSelectorProps {
     onSelectHistory: () => void;
     onSelectOrishas: () => void;
     onSelectCalendar?: () => void;
+    onSelectTranscripts?: () => void;
 }
 
 export const SystemSelector: React.FC<SystemSelectorProps> = ({
@@ -14,7 +15,8 @@ export const SystemSelector: React.FC<SystemSelectorProps> = ({
     onSelectMerindilogun,
     onSelectHistory,
     onSelectOrishas,
-    onSelectCalendar
+    onSelectCalendar,
+    onSelectTranscripts
 }) => {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen px-6 py-12">
@@ -152,6 +154,16 @@ export const SystemSelector: React.FC<SystemSelectorProps> = ({
                     <Calendar className="w-5 h-5 text-purple-400" />
                     <span className="text-purple-300 font-bold text-sm uppercase tracking-widest group-hover:text-white transition-colors">
                         Sacred Calendar
+                    </span>
+                </button>
+
+                <button
+                    onClick={onSelectTranscripts}
+                    className="group flex items-center gap-3 px-6 py-3 bg-teal-900/30 border border-teal-700/50 hover:border-teal-500/80 rounded-full transition-all duration-500 hover:bg-teal-900/50 hover:shadow-[0_0_30px_rgba(20,184,166,0.2)]"
+                >
+                    <FileText className="w-5 h-5 text-teal-400" />
+                    <span className="text-teal-300 font-bold text-sm uppercase tracking-widest group-hover:text-white transition-colors">
+                        Transcript Library
                     </span>
                 </button>
 
