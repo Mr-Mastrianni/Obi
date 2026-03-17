@@ -15,6 +15,7 @@ import { SourceRecord, TopicEntry } from '../../transcriptTypes';
 // IMPORT TRANSCRIPT JSON FILES HERE
 // ============================================================
 import whatIsOriki from './what-is-orik-calling-orisha-down-from-heaven.json';
+import patakiTheater from './aptataki-theater-with-oba-live-q-a.json';
 
 // ============================================================
 // STATIC DATA ARRAYS
@@ -23,11 +24,13 @@ import whatIsOriki from './what-is-orik-calling-orisha-down-from-heaven.json';
 // Add each imported transcript's source record here
 const staticSources: SourceRecord[] = [
   whatIsOriki.source as SourceRecord,
+  patakiTheater.source as SourceRecord,
 ];
 
 // Add each imported transcript's topics here
 const staticTopics: TopicEntry[] = [
   ...(whatIsOriki.topics as TopicEntry[]),
+  ...(patakiTheater.topics as TopicEntry[]),
 ];
 
 export { staticSources, staticTopics };
