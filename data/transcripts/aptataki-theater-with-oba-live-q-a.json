@@ -69,36 +69,36 @@
     {
       "id": "1773710504456_0rvmsds",
       "sourceId": "1773710498381_vwd4dn7",
-      "title": "Epha, Babalow, and Arisha Hierarchy",
+      "title": "Ifa, Babalawo, and Orisha Hierarchy",
       "teacher": "Brotha Oba",
       "knowledgeType": "lineage perspective, oral teaching",
-      "summary": "Brotha Oba presents the relationship between Epha, Babalow, and Arisha as a structured hierarchy within the Regla De Ocha tradition.",
-      "detailedNotes": "He explains that Babalow function as a fraternity within the Arisha culture, and that Rumila is one among many deities. He critiques the Epha movement for creating a pragmatic, non‑possessed cadre that lacks spiritual depth. He also notes the influence of Abrahamic constructs on some contemporary practices.",
-      "warnings": "He cautions against adopting Epha teachings without understanding their departure from traditional possession practices.",
-      "lineageSensitivity": "This discussion is sensitive to practitioners who identify with the Babalow or Arisha lineages.",
+      "summary": "Brotha Oba presents the relationship between Ifa, Babalawo, and Orisha as a structured hierarchy within the Regla De Ocha tradition.",
+      "detailedNotes": "He explains that Babalawo function as a fraternity within the Orisha culture, and that Orunmila is one among many deities. He critiques the Ifa movement for creating a pragmatic, non‑possessed cadre that lacks spiritual depth. He also notes the influence of Abrahamic constructs on some contemporary practices.",
+      "warnings": "He cautions against adopting Ifa teachings without understanding their departure from traditional possession practices.",
+      "lineageSensitivity": "This discussion is sensitive to practitioners who identify with the Babalawo or Orisha lineages.",
       "verificationStatus": "interpretive",
       "tags": [
         "lineage",
         "hierarchy",
-        "Epha",
-        "Babalow",
-        "Arisha"
+        "Ifa",
+        "Babalawo",
+        "Orisha"
       ],
       "claims": [
         {
           "id": "1773710504456_2wnx389",
           "type": "claim",
-          "content": "Brotha Oba frames Babalow as a fraternity that exists within the Arisha culture."
+          "content": "Brotha Oba frames Babalawo as a fraternity that exists within the Orisha culture."
         },
         {
           "id": "1773710504456_jkiji0c",
           "type": "claim",
-          "content": "Within Brotha Oba's teaching framework, Epha creates a pragmatic cadre that does not experience possession."
+          "content": "Within Brotha Oba's teaching framework, Ifa creates a pragmatic cadre that does not experience possession."
         },
         {
           "id": "1773710504456_ilxt9am",
           "type": "warning",
-          "content": "Brotha Oba warns that Epha's Abrahamic‑inspired blueprint may dilute traditional spiritual depth."
+          "content": "Brotha Oba warns that Ifa's Abrahamic‑inspired blueprint may dilute traditional spiritual depth."
         }
       ]
     },
@@ -170,12 +170,12 @@
     {
       "id": "1773710504456_oae1mp2",
       "sourceId": "1773710498381_vwd4dn7",
-      "title": "Mythic Narrative of Yunja and Oshun",
+      "title": "Mythic Narrative of Yemoja, Erinle, and Oshun",
       "teacher": "Brotha Oba",
       "knowledgeType": "mythic interpretation",
-      "summary": "Brotha Oba recounts the story of Yunja, Oshun, and Arin to illustrate sacrifice, love, and the bridging of realms.",
-      "detailedNotes": "He describes Yunja offering his tongue to Yunja to protect her secrets, and the subsequent transformation of his role into a doctor who communicates with organs. He links this narrative to the concept of telepathy and the cleansing of swamp water, symbolizing the purification of spirit.",
-      "mythicReferences": "Yunja, Oshun, Arin, telepathy, tongue sacrifice",
+      "summary": "Brotha Oba recounts the story of Yemoja and Erinle's love, and how Yemoja sent Erinle to comfort Oshun, illustrating sacrifice, humility, and the meeting of waters.",
+      "detailedNotes": "He describes how Yemoja fell in love with Erinle, taking him to the depths of her kingdom and revealing her secrets. Fearing he might reveal them upon leaving, Erinle—in an act of humility and love—cut out his own tongue and offered it to her as assurance. Yemoja, loving both Erinle and her sister Oshun, sent Erinle to comfort Oshun in her despondency. This is where the ocean meets land to become brackish swamp water, which cleanses and becomes drinkable river water. Having no tongue, Erinle developed telepathy—his other ase—which he uses to guide animals to water and to speak with human organs, becoming the divine doctor who can hear which organ suffers.",
+      "mythicReferences": "Yemoja, Erinle, Oshun, telepathy, tongue sacrifice, brackish water",
       "verificationStatus": "interpretive",
       "tags": [
         "mythic",
@@ -187,12 +187,12 @@
         {
           "id": "1773710504456_fllos7g",
           "type": "mythic_explanation",
-          "content": "Brotha Oba frames Yunja's tongue sacrifice as a protective act that enables communication with the spirit world."
+          "content": "Brotha Oba frames Erinle's self-sacrifice of his tongue as an act of humility and love that enabled him to develop telepathy and become the divine doctor."
         },
         {
           "id": "1773710504456_6nkm2pl",
           "type": "claim",
-          "content": "He presents the story as illustrating how love and sacrifice cleanse the swamp, allowing a river of spirit to flow."
+          "content": "He presents the story as illustrating how the love between Yemoja and Erinle, and Yemoja's love for Oshun, created the brackish swamp where ocean meets land, cleansing water into drinkable rivers."
         }
       ]
     },
@@ -206,7 +206,7 @@
       "detailedNotes": "He notes that many diaspora practitioners lack the three‑family clan structure necessary for true lineage. He critiques those who wear African garb without understanding the cultural context, and he stresses the importance of ancestral connections, especially to Cuba and Nigeria.",
       "practiceImplications": "Practitioners should seek genuine lineage connections and avoid superficial cultural appropriation.",
       "warnings": "He cautions that adopting practices without lineage can lead to spiritual misalignment.",
-      "historicalClaims": "The three‑family requirement for a clan and the historical presence of Arisha in Nigeria before Cuban diaspora.",
+      "historicalClaims": "The three‑family requirement for a clan and the historical presence of Orisha in Nigeria before Cuban diaspora.",
       "lineageSensitivity": "Sensitive to diaspora practitioners who may feel criticized.",
       "verificationStatus": "needs verification",
       "tags": [
